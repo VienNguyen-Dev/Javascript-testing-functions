@@ -41,6 +41,10 @@ describe("calculateDiscount", () => {
     expect(calculateDiscount(-10, "SAVE10")).toMatch(/invalid/i);
   })
   it("Should hanlde non-string discount price", () => {
-    d
+    expect(calculateDiscount(10, 10)).toMatch(/invalid/i);
+  })
+  it("Should handle with an invalid discount code", () => {
+    expect(calculateDiscount(10, "INVALID")).toBe(10);
   })
 })
+
