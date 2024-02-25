@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateDiscount, getCoupons, validateUserInput } from "../src/core";
+import { calculateDiscount, getCoupons, isPriceInRange, validateUserInput } from "../src/core";
 
 describe("getCoupons", () => {
   const coupons = getCoupons();
@@ -83,6 +83,22 @@ describe("validateUserInput", () => {
   it("Should return an error if username and age is not valid", () => {
     expect(validateUserInput('', 0)).toMatch(/invalid username/i)
     expect(validateUserInput('', 0)).toMatch(/invalid age/i)
+  })
+})
+
+//Boundary testing
+describe("isPriceInRange", () => {
+  it.each([
+    { scenario: 'price < min', price: -10, result: false },
+    { scenario: 'price = min', price: 0, result: true }, {
+      scenario: 'price bettwen min and max', price: 50, result: true
+    },
+    { scenario: 'price > max', price: 101, result: false },
+    {
+      scenario: 'price = max', price: 100, result: true
+    },
+  ])(`Should return $result when $scenario`, ({ price, result }) => {
+    expect(isPriceInRange(price, 0, 100)).toBe(result);
   })
 })
 
