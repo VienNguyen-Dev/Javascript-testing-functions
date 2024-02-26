@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateDiscount, canDrive, getCoupons, isPriceInRange, isValidUsername, validateUserInput, } from "../src/core";
+import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput, } from "../src/core";
 
 describe("getCoupons", () => {
   const coupons = getCoupons();
@@ -147,5 +147,18 @@ describe("canDrive", () => {
     expect(canDrive(age, country)).toBe(result);
   })
 })
+
+//Lessson: Testing asynchronous code
+describe("fetchData", () => {
+  it("Should return a promise that will resolve to an array of number", async () => {
+    try {
+      await fetchData();
+    } catch (error) {
+      expect(error).toHaveProperty('reason');
+      expect(error).toMatch(/fail/i)
+    }
+  })
+})
+
 
 
