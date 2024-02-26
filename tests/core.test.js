@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput, } from "../src/core";
+import { describe, it, expect, beforeEach } from "vitest";
+import { Stack, calculateDiscount, canDrive, fetchData, getCoupons, isPriceInRange, isValidUsername, validateUserInput, } from "../src/core";
 
 describe("getCoupons", () => {
   const coupons = getCoupons();
@@ -160,5 +160,64 @@ describe("fetchData", () => {
   })
 })
 
+//Lesson: Stup and teardown
 
+describe("Stack", () => {
+  let stack;
+  beforeEach(() => {
+    stack = new Stack();
+  })
 
+  it("push should add an item to the stack", () => {
+    stack.push(1);
+    expect(stack.size()).toBe(1);
+  })
+
+  it("Pop should remove and return the top item from the stack", () => {
+    stack.push(10);
+    stack.push(20);
+    const poppedItem = stack.pop();
+
+    expect(poppedItem).toBe(20);
+    expect(stack.size()).toBe(1);
+  })
+
+  it("pop should return an error if stack is empty", () => {
+    expect(() => stack.pop()).toThrow(/empty/i)
+  })
+
+  it("peek should return the top item from the stack without removing it", () => {
+    stack.push(100);
+    stack.push(200);
+    stack.push(300);
+
+    const peekedItem = stack.peek();
+    expect(peekedItem).toBe(300);
+    expect(stack.size()).toBe(3);
+  })
+
+  it("peek should return an error if stack is empty", () => {
+    expect(() => stack.peek()).toThrow(/empty/i)
+  })
+
+  it("should return true if array is empty", () => {
+    expect(stack.isEmpty()).toBe(true);
+  })
+  it("should return false if array is not empty", () => {
+    stack.push(1);
+    expect(stack.isEmpty()).toBe(false);
+  })
+
+  it("Should return the number of items in the stack", () => {
+    stack.push(1);
+    stack.push(2);
+    expect(stack.size()).toBe(2);
+  })
+
+  it("clear should remove all items from the stack", () => {
+    stack.push(10);
+    stack.push(20);
+    stack.clear();
+    expect(stack.size()).toBe(0);
+  })
+})
