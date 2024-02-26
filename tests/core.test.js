@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculateDiscount, getCoupons, isPriceInRange, isValidUsername, validateUserInput } from "../src/core";
+import { calculateDiscount, canDrive, getCoupons, isPriceInRange, isValidUsername, validateUserInput, } from "../src/core";
 
 describe("getCoupons", () => {
   const coupons = getCoupons();
@@ -129,4 +129,23 @@ describe("isValidUsername", () => {
     expect(isValidUsername(1)).toBe(false);
   })
 })
+
+//Exercise: Boundary testing
+describe("canDrive", () => {
+
+  it("should return an error if invalid countryCode", () => {
+    expect(canDrive(16, 'VN')).toMatch(/invalid/i)
+  })
+  it.each([
+    { age: 15, country: 'US', result: false },
+    { age: 16, country: "US", result: true },
+    { age: 17, country: "US", result: true },
+    { age: 16, country: "UK", result: false },
+    { age: 17, country: "UK", result: true },
+    { age: 18, country: "UK", result: true }
+  ])("Should return $result for $age,  $country", ({ age, country, result }) => {
+    expect(canDrive(age, country)).toBe(result);
+  })
+})
+
 
